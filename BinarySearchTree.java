@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BinarySearchTree<Item extends Comparable<Item>> {
 	private Node<Item> root;
 
@@ -89,6 +91,28 @@ public class BinarySearchTree<Item extends Comparable<Item>> {
 			return recursiveSearch(node.rightChild, value);
 	}
 
+	public void nonRecursivePreorder() {
+		nonRecursivePreorder(root);
+	}
+	private void nonRecursivePreorder(Node root) {
+		/*
+		 * visual what's going on with the recursive solution. It uses stacks so simulate this process
+		 * using stacks. The trick to this algorithm is for every node you visit, push the right child
+		 * and then push the left child (assuming these nodes aren't null)
+		 */
+		Stack<Node> stack = new Stack<Node>();
+		stack.push(root);
+		while (!stack.empty()) {
+			Node currentNode = stack.pop();
+			System.out.println(currentNode.value);
+			if (currentNode.rightChild != null)
+				stack.push(currentNode.rightChild);
+			if (currentNode.leftChild != null)
+				stack.push(currentNode.leftChild);
+		}
+	}	
+	
+	
 	public int getSize() { return getSize(root); }
 	private int getSize(Node<Item> node) {
 		if (node == null)
