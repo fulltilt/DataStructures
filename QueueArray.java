@@ -21,35 +21,33 @@ public class ArrayFifoQueue<Item> implements Queue<Item> {
 	/*
 	 * add to end of queue
 	 */
-	public void enqueue(Item item) {
-		if (size == queue.length)
-			System.out.println("Unable to insert into queue. Queue is full!");
-			
-		if (back == queue.length - 1)	// deal with wraparound
-			back = 0;
-
-		queue[back++] = item;		// increment rear and insert one more item
-		size++;
-		
-	}
+    public void enqueue(Item item) {
+        if (size == queue.length)
+            throw new RuntimeException("Queue is full!");
+        
+        queue[back++] = item;   // increment back and insert one more item
+        
+        if (back == queue.length)   // deal with wraparound
+            back = 0;
+            
+        ++size;    
+    }	
 
 	/*
 	 * remove first item in queue
 	 */
-	public Item dequeue() throws EmptyQueueException {
-		if (size == 0)
-			throw new EmptyQueueException();
-		
-		Item item = queue[front];
-		
-		if (front == queue.length - 1)	// deal with wraparound
-			front = 0;
-		else
-			++front;
-		
-		--size;
-		return item;
-	}
+    public Item dequeue() {
+        if (size == 0)
+            throw new RuntimeException("Queue is empty!!");
+        
+        Item item = queue[front++];
+        
+        if (front == queue.length)  // deal with wraparound
+            front = 0;
+        
+        --size;
+        return item;
+    }	
 	
 	public int getFrontIndex() { return front; }
 	public int getRearIndex() { return back; }
